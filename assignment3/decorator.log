@@ -1,0 +1,12 @@
+function: hello_world
+positional parameters: none
+keyword parameters: none
+return: None
+function: positional_function
+positional parameters: (1, 2, 3, 'Kimmie')
+keyword parameters: none
+return: True
+function: keyword_function
+positional parameters: none
+keyword parameters: {'name': 'Kimmie', 'lesson': 3, 'status': 'moving fast'}
+return: <function logger_decorator at 0x104d31280>
