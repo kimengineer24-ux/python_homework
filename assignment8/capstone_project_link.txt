@@ -1,0 +1,9 @@
+Task 7: Web Scraping Capstone Project
+
+Separate capstone repository:
+https://github.com/kimengineer24-ux/weather-web-scraping-capstone
+
+Capstone pull request:
+https://github.com/kimengineer24-ux/weather-web-scraping-capstone/pull/1
+
+This capstone project is separate from the python_homework repository. It includes a weather scraping script that uses Selenium, loads scraped data into pandas, cleans the data, and saves the results to a CSV file.
