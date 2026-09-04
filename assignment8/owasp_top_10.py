@@ -1,6 +1,6 @@
 # Task 6: Scraping Structured Data
-# This script uses Selenium and XPath to scrape OWASP Top 10 vulnerability titles and links.
-# It saves the results to owasp_top_10.csv.
+# This script uses Selenium and XPath to scrape the OWASP Top 10 vulnerability titles and links.
+# It starts from the exact page in the assignment: https://owasp.org/www-project-top-ten/
 
 import time
 from pathlib import Path
@@ -15,7 +15,6 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 
 PROJECT_URL = "https://owasp.org/www-project-top-ten/"
-TOP10_URL = "https://owasp.org/Top10/2025/"
 
 
 def create_driver():
@@ -37,7 +36,6 @@ driver = create_driver()
 owasp_results = []
 
 try:
-    # Read the OWASP project page first.
     driver.get(PROJECT_URL)
 
     wait = WebDriverWait(driver, 15)
@@ -45,46 +43,46 @@ try:
 
     time.sleep(2)
 
-    # Then read the current OWASP Top 10 list page.
-    driver.get(TOP10_URL)
+    print("Starting page used:")
+    print(PROJECT_URL)
+
+    # Find the current OWASP Top Ten release link from the exact assignment page.
+    current_release_link = driver.find_element(
+        By.XPATH,
+        '//a[contains(@href, "/Top10/") and contains(normalize-space(.), "OWASP Top Ten")]'
+    )
+
+    current_release_url = current_release_link.get_attribute("href")
+
+    print("\nCurrent OWASP Top Ten release page found:")
+    print(current_release_url)
+
+    driver.get(current_release_url)
 
     wait.until(EC.presence_of_element_located((By.TAG_NAME, "body")))
 
     time.sleep(2)
 
-    # Use XPath to find links that contain A01 through A10.
-    risk_links = driver.find_elements(
+    # Find the Top 10 list heading, then use XPath to get the ordered list links after it.
+    top10_heading = driver.find_element(
         By.XPATH,
-        '//a[contains(normalize-space(.), "A01:2025") or '
-        'contains(normalize-space(.), "A02:2025") or '
-        'contains(normalize-space(.), "A03:2025") or '
-        'contains(normalize-space(.), "A04:2025") or '
-        'contains(normalize-space(.), "A05:2025") or '
-        'contains(normalize-space(.), "A06:2025") or '
-        'contains(normalize-space(.), "A07:2025") or '
-        'contains(normalize-space(.), "A08:2025") or '
-        'contains(normalize-space(.), "A09:2025") or '
-        'contains(normalize-space(.), "A10:2025")]'
+        '//*[contains(normalize-space(.), "Top 10:2025 List")]'
     )
 
-    seen_titles = set()
+    risk_links = top10_heading.find_elements(
+        By.XPATH,
+        './following::ol[1]/li/a'
+    )
 
     for link in risk_links:
         title = " ".join(link.text.split()).strip()
         href = link.get_attribute("href")
 
-        if not title or not href:
-            continue
-
-        if title in seen_titles:
-            continue
-
-        seen_titles.add(title)
-
-        owasp_results.append({
-            "Title": title,
-            "Link": href
-        })
+        if title and href:
+            owasp_results.append({
+                "Title": title,
+                "Link": href
+            })
 
         if len(owasp_results) == 10:
             break
