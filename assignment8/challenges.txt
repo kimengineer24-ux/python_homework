@@ -1,0 +1,7 @@
+Task 6: Challenges
+
+One challenge I faced was figuring out how to locate the correct information inside the HTML page. Web pages have many nested tags, so I had to focus on the specific section that contained the data I needed.
+
+Another challenge was making the scraping code flexible enough to handle missing or extra tags. I resolved this by checking for empty text, using clear selectors, and only saving results that had both a title and a link.
+
+I also learned that web scraping can be fragile because websites can change their structure. To handle this, I added comments, used XPath carefully, and kept the scraping focused on the exact information required for the assignment.
