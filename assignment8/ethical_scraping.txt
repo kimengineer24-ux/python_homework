@@ -1,0 +1,7 @@
+Task 5: Ethical Web Scraping
+
+Wikipedia's robots.txt file restricts several parts of the site from crawling. Some restricted areas include /w/, /api/, /trap/, and Special pages such as /wiki/Special:. It also has additional restricted pages for different language versions of Wikipedia.
+
+Yes, there are specific rules for certain user agents. Some bots are fully blocked with Disallow: /, while other bots have different rules or delays.
+
+Websites use robots.txt to tell web crawlers what areas should or should not be accessed. This helps protect the website from too much traffic and supports ethical scraping by encouraging developers to respect the site owner's rules.
